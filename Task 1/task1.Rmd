@@ -1,0 +1,54 @@
+---
+title: "The Spark Foundation Task 1"
+author: "RISHAB JAIN"
+date: "06/01/2021"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## PROBLEM STATEMENT : 
+## What will be the predicted score if studies for 9.25hr/day
+Solution :
+We will be using linear regression model for this prediction..
+At first we will the load the library 
+```{r}
+library(tidyverse)
+library(carat)
+```
+Now, we will load the dataset from the url given 
+```{r}
+library(readr)
+scores <- read.csv("https://raw.githubusercontent.com/AdiPersonalWorks/Random/master/student_scores%20-%20student_scores.csv")
+scores
+```
+#Now we will train the model
+```{r}
+hour <- scores$Hours
+scr <- scores$Scores
+model <- lm(scr~hour)
+model
+```
+#Plotting the regression line
+```{r}
+attach(scores)
+plot(Hours,Scores,type = "p",xlab = "Hours studied",ylab = "Percentage Scored",main = "Hours vs Percentage",col = "black")
+abline(model,col = "green")
+```
+#Comparing the actual and predicted scores
+```{r}
+actual = scr
+hour = data.frame(hour)
+predicted <- predict(model,hour)
+compare = data.frame(actual,predicted)
+compare
+```
+## Now after training our model we can solve the question given in our task that what will be the score if it sudies for 9.25/days
+```{r}
+test = data.frame(hour = 9.25)
+test2 = predict(model,test)
+test2
+```
+# From this we come into conclusion that the prediction score for studying 9.25hrs/day is around 92.9 
