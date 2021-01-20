@@ -1,0 +1,48 @@
+---
+title: "THE SPARK FOUNDATION TASK 2"
+author: "RISHAB JAIN"
+date: "11/01/2021"
+output: pdf_document
+
+---
+## TASK : Predict the optimum number of clusters in the given dataset
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Loading the data set
+```{r}
+data("iris")
+summary(iris)
+head(iris)
+```
+## Data clustering
+```{r}
+x = iris[,-5]
+y = iris$Species
+set.seed(27)
+#finding the cluster
+wcss = vector()
+for(i in  1 :10)wcss[i] = sum(kmeans(x,i)$withinss)
+plot(1:10,
+     wcss,
+     type = "b",
+     main = "Elbow Method",
+     xlab = "Number of cluster",
+     ylab = "wcss")
+```
+## Fitting the model
+```{r}
+set.seed(27)
+kmeans = kmeans(x,centers = 3)
+kmeans
+table(y,kmeans$cluster)
+```
+## Visualising the cluster
+```{r}
+plot(x[c("Sepal.Length","Sepal.Width")], col = kmeans$cluster )
+points(kmeans$centers[,c("Sepal.Length","Sepal.Width")],col = 1,pch = 23, cex = 3)
+```
+Concluding , There are 3 cluster in the graph...
+
+
