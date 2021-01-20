@@ -1,0 +1,45 @@
+---
+title: "THE SPARK FOUNDATION TASK 6"
+author: "RISHAB JAIN"
+date: "20/01/2021"
+output: pdf_document
+
+---
+## TASK : Prediction Using Decison Tree Algorithim
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Loading the Dataset
+```{r}
+dt <- iris
+head(dt)
+dim(dt)
+```
+## Basic Data insight
+```{r}
+sum(is.na(dt))
+
+```
+There is no null value in the data set 
+# Creating sample train and test Data set
+```{r}
+s <- sample(200,150)
+train <- dt[s,]
+test <- dt[-s,]
+dim(train)
+dim(test)
+```
+## Loading the library for decison tree data
+```{r}
+library(rpart)
+library(rpart.plot)
+```
+# We will be predicting the classification of Species here utlising all the variable by the model
+```{r}
+model <- rpart(Species~., train, method = "class")
+
+rpart.plot(model)
+```
+We can now feed any new/test data to this classifer and it would be able to predict the right class accordingly.
+
